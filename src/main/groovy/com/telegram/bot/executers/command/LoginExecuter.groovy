@@ -19,9 +19,6 @@ class LoginExecuter implements IExecuters {
 	private OutgoingTextMessage outMessage	=	new OutgoingTextMessage();
 	private FriendUser friendUser	=	new FriendUser();
 	
-//	@Autowired
-//	MessageService messageService;
-	
 	@Override
 	public void setMessage(IncomingMessage message) {
 		this.message=message;
@@ -70,7 +67,6 @@ class LoginExecuter implements IExecuters {
 		OutgoingTextMessage action(IncomingMessage message) {
 			friendUser	=	new FriendUser(message.getFrom().getId());
 			friendUser.setPin(message.getText());
-//			messageService.remove(message);
 			if(checkPin(message.getText())) {
 				outMessage.setText("ПИН успешно подтвержден. Пользователь авторизован.");
 				friendUser.setIsAutorized(true);

@@ -19,8 +19,11 @@ class LogoutExecuter implements IExecuters {
 	
 	@Override
 	public OutgoingTextMessage getAnswer() {
-		CacheManager.removeUserFromCache(message.getFrom().getId());
-		outMessage.setText("Пользователь вышел.");
+		if(null!=CacheManager.removeUserFromCache(message.getFrom().getId())) {
+			outMessage.setText("Пользователь вышел.");
+		}else {
+			outMessage.setText("Выход не требуется, пользователь не авторизован.");
+		}
 		return outMessage;
 	}
 

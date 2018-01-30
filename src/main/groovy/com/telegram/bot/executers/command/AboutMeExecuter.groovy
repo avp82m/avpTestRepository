@@ -27,6 +27,11 @@ class AboutMeExecuter implements IExecuters {
 	public OutgoingTextMessage getAnswer() {
 		String answer	=	"";
 		try {
+			if (new FriendUser(message.getFrom().getId()).getId()	==	null) {
+				outMessage.setText("Для получения информации необходимо авторизоваться.");
+				return outMessage;
+			}
+				
 			def user = FrendServerAPI.getCurrentUser(new FriendUser(message.getFrom().getId()))
 			if(user!=null) {
 				answer	=	"<b>ФИО: </b>"+user.object.kadr.fio.toString()+

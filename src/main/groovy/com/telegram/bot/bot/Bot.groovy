@@ -32,9 +32,6 @@ class Bot {
 	@Autowired
 	private Environment env;
 	
-//	@Autowired
-//	private UserService userService;
-	
 	private HashMap<String,String>botCommands = new HashMap<String,String>();
 	
 	@Scheduled(fixedDelay  = 1000L)
@@ -59,7 +56,7 @@ class Bot {
 			executer.setMessage(message);
 			return executer.getAnswer();
 		}catch(Exception e) {
-			log.error("ifCommand Exception: {}",e);
+			log.error("execCommand Exception: {}",e);
 			return new DefaultExecuter().getErrorAnswer(message,"Не понимаю чего вы хотите, проверьте корректность введенных данных.");
 		}
 		
