@@ -5,6 +5,7 @@ import java.util.HashMap
 import org.apache.camel.component.telegram.model.IncomingMessage
 import org.apache.camel.component.telegram.model.OutgoingTextMessage
 import com.telegram.bot.entity.FriendUser
+import com.telegram.bot.executers.AccessLevels
 import com.telegram.bot.executers.IExecuters
 import com.telegram.bot.cache.CacheManager
 
@@ -35,4 +36,8 @@ class StartExecuter implements IExecuters {
 		return "Вывод привествия";
 	}
 
+	@Override
+	public AccessLevels getAccessLevel() {
+		return AccessLevels.AUTHORIZED;
+	}
 }

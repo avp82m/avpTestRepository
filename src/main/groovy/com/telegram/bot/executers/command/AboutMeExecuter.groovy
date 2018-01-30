@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.telegram.bot.cache.CacheManager
 import com.telegram.bot.entity.FriendUser
+import com.telegram.bot.executers.AccessLevels
 import com.telegram.bot.executers.IExecuters
 import com.telegram.bot.frendserever.api.FrendServerAPI
 
@@ -17,6 +18,7 @@ class AboutMeExecuter implements IExecuters {
 	private static final Logger log = LoggerFactory.getLogger(AboutMeExecuter.class);
 	private IncomingMessage message	=	null;
 	private OutgoingTextMessage outMessage	=	new OutgoingTextMessage();
+	
 	
 	@Override
 	public void setMessage(IncomingMessage message) {
@@ -54,6 +56,11 @@ class AboutMeExecuter implements IExecuters {
 	@Override
 	public String getHelp() {
 		return "Информация о пользователе";
+	}
+
+	@Override
+	public AccessLevels getAccessLevel() {
+		return AccessLevels.AUTHORIZED;
 	}
 
 }

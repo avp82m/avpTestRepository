@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 import com.telegram.bot.cache.CacheManager
 import com.telegram.bot.entity.FriendUser
+import com.telegram.bot.executers.AccessLevels
 import com.telegram.bot.executers.IExecuters
 import com.telegram.bot.executers.listener.AnswerListeners
 import com.telegram.bot.executers.listener.IAnswerListener
@@ -96,5 +97,8 @@ class LoginExecuter implements IExecuters {
 		return "Авторизация";
 	}
 
-	
+	@Override
+	public AccessLevels getAccessLevel() {
+		return AccessLevels.ANONYMOUS;
+	}
 }

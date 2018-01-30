@@ -2,6 +2,8 @@ package com.telegram.bot.executers.command
 
 import org.apache.camel.component.telegram.model.IncomingMessage
 import org.apache.camel.component.telegram.model.OutgoingTextMessage
+
+import com.telegram.bot.executers.AccessLevels
 import com.telegram.bot.executers.IExecuters
 
 class DefaultExecuter implements IExecuters {
@@ -30,6 +32,12 @@ class DefaultExecuter implements IExecuters {
 	public OutgoingTextMessage getErrorAnswer(IncomingMessage message,String error) {
 		outMessage.setText(error);
 		return outMessage;
+	}
+
+
+	@Override
+	public AccessLevels getAccessLevel() {
+		return AccessLevels.ALL;
 	}
 
 }

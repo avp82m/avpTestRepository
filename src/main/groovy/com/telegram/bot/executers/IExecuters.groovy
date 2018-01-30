@@ -7,4 +7,5 @@ interface IExecuters {
 	OutgoingTextMessage getAnswer();
 	void setMessage(IncomingMessage message);
 	String getHelp();
+	AccessLevels getAccessLevel();
 }
