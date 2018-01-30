@@ -9,6 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 class BotApplication {
 
 	static void main(String[] args) {
-		SpringApplication.run(BotApplication.class, args);
+		SpringApplication.run(BotApplication.class, args);/**/
 	}
 }
