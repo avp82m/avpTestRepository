@@ -23,9 +23,9 @@ class StartExecuter implements IExecuters {
 	@Override
 	public OutgoingTextMessage getAnswer() {
 		if(friendUser == null || !friendUser.getIsAutorized())
-			outMessage.setText("Здравствуйте! Авторизуйтесь, что бы я знал с кем говорю /login.");
+			outMessage.setText("Здравствуйте! Авторизуйтесь, что бы я знал как к Вам обращаться /login.");
 		else
-			outMessage.setText("Здравствуйте! Вы авторизованы("+friendUser.getSessionId()+").\nОзнакомьтесь со списком доступных комманд /help.");
+			outMessage.setText("Здравствуйте "+friendUser.getFname()+" "+friendUser.getName()+"!\nОзнакомьтесь со списком доступных Вам комманд /help.");
 			
 		return outMessage;
 	}

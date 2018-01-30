@@ -32,6 +32,9 @@ class FrendServerAPI {
 				friendUser.setSessionId(conn.getHeaderField("Set-Cookie"));
 				friendUser.save();
 				log.debug("FrendServer Cookie: {}",friendUser.getSessionId());
+				
+				getCurrentUser(friendUser);
+				
 				return true;
 			}
 			return false;
@@ -60,6 +63,10 @@ class FrendServerAPI {
 			log.debug("FrendServer answer: {}",jsonResp);
 			
 			if(conn.responseCode==200) {
+				friendUser.setSname(jsonResp.object.kadr.secondName.toString());
+				friendUser.setName(jsonResp.object.kadr.middleName.toString());
+				friendUser.setFname(jsonResp.object.kadr.firstName.toString());
+				
 				friendUser.save();
 				log.debug("FrendServer Cookie: {}",friendUser.getSessionId());
 				return jsonResp;
