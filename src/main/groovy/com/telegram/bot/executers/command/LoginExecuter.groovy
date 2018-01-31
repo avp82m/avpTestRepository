@@ -13,6 +13,8 @@ import com.telegram.bot.executers.IExecuters
 import com.telegram.bot.executers.listener.AnswerListeners
 import com.telegram.bot.executers.listener.IAnswerListener
 import com.telegram.bot.frendserever.api.FrendServerAPI
+import com.telegram.bot.frendserever.api.requests.GetCurrentUser
+import com.telegram.bot.frendserever.api.requests.IFriendServerRequest
 import com.telegram.bot.service.MessageService
 
 class LoginExecuter implements IExecuters {
@@ -71,6 +73,8 @@ class LoginExecuter implements IExecuters {
 			if(checkPin(message.getText())) {
 				outMessage.setText("ПИН успешно подтвержден. Пользователь авторизован.");
 				friendUser.setIsAutorized(true);
+				def user	=	FrendServerAPI.sendRequest(new GetCurrentUser(), friendUser);
+				friendUser.refresh(user);
 			}else {
 				outMessage.setText("ПИН не подтвержден. Повторите процедуру авторизации /login.");
 				friendUser.setIsAutorized(false);

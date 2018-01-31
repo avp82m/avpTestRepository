@@ -12,6 +12,7 @@ import com.telegram.bot.entity.FriendUser
 import com.telegram.bot.executers.AccessLevels
 import com.telegram.bot.executers.IExecuters
 import com.telegram.bot.frendserever.api.FrendServerAPI
+import com.telegram.bot.frendserever.api.requests.GetCurrentUser
 
 
 class AboutMeExecuter implements IExecuters {
@@ -29,18 +30,23 @@ class AboutMeExecuter implements IExecuters {
 	public OutgoingTextMessage getAnswer() {
 		String answer	=	"";
 		try {
-			if (new FriendUser(message.getFrom().getId()).getId()	==	null) {
+			FriendUser friendUser	=	new FriendUser(message.getFrom().getId());
+			
+			if (friendUser.getIsAutorized()	==	false) {
 				outMessage.setText("Для получения информации необходимо авторизоваться.");
 				return outMessage;
 			}
-				
-			def user = FrendServerAPI.getCurrentUser(new FriendUser(message.getFrom().getId()))
+			
+			
+			
+			def user	=	FrendServerAPI.sendRequest(new GetCurrentUser(), friendUser);
+			friendUser.refresh(user);
 			if(user!=null) {
-				answer	=	"<b>ФИО: </b>"+user.object.kadr.fio.toString()+
-							"\n<b>Табельный номер: </b>"+user.object.kadr.tabNum.toString()+
-							"\n<b>Email: </b>"+user.object.ldap.eMail.toString()+
-							"\n<b>Должность: </b>"+user.object.kadr.position.toString()+
-							"\n<b>Кадровая системва: </b>"+user.object.systemKadr.toString();
+				answer	=	"<b>ФИО: </b>"+friendUser.getUserData().kadr.fio.toString()+
+							"\n<b>Табельный номер: </b>"+friendUser.getUserData().kadr.tabNum.toString()+
+							"\n<b>Email: </b>"+friendUser.getUserData().ldap.eMail.toString()+
+							"\n<b>Должность: </b>"+friendUser.getUserData().kadr.position.toString()+
+							"\n<b>Кадровая система: </b>"+friendUser.getUserData().systemKadr.toString();
 			}else {
 				throw new Exception("User is null");	
 			}

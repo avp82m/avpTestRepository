@@ -12,6 +12,7 @@ class FriendUser {
 	private Boolean isAutorized	=	false;
 	private String sessionId;
 	private String pin;
+	private userData	=	null;
 	
 	FriendUser(Long userId){
 		FriendUser	tmp	=	CacheManager.getUserFromCache(userId);
@@ -29,6 +30,21 @@ class FriendUser {
 	
 	FriendUser(){}
 	
+	
+	public void refresh(def newData) {
+		userData	=	newData;
+		if(userData!=null) {
+			setSname(userData.kadr.secondName.toString());
+			setName(userData.kadr.middleName.toString());
+			setFname(userData.kadr.firstName.toString());
+			save();
+		}
+	}
+	
+	public def getUserData() {
+		return userData;
+	}
+			
 	public Long getId() {
 		return id;
 	}
@@ -116,5 +132,17 @@ class FriendUser {
 	
 	public void save() {
 		CacheManager.setUserToCache(getId(),this);
+	}
+	
+	
+	public String toString() {
+		return "Id: "+getId()+
+				"\nFname: "+getFname()+
+				"\nName: "+getName()+
+				"\nSname: "+getSname()+
+				"\nEmail: "+getEmail()+
+				"\nIsAutorized: "+getIsAutorized()+
+				"\nSessionId: "+getSessionId()+
+				"\nPin: "+getPin();
 	}
 }
