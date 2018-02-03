@@ -54,6 +54,7 @@ class AboutMeExecuter implements IExecuters {
 			log.debug("Exception: {}",e);
 		}	
 		outMessage.setText(answer);
+		outMessage.setParseMode("html");
 		return outMessage;
 	}
 
