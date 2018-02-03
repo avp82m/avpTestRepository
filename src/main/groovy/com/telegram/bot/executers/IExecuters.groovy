@@ -1,11 +1,12 @@
 package com.telegram.bot.executers
 
-import org.apache.camel.component.telegram.model.IncomingMessage
-import org.apache.camel.component.telegram.model.OutgoingTextMessage
+import org.telegram.telegrambots.api.objects.Message;
+
+import org.telegram.telegrambots.api.methods.send.SendMessage
 
 interface IExecuters {
-	OutgoingTextMessage getAnswer();
-	void setMessage(IncomingMessage message);
+	SendMessage getAnswer();
+	void setMessage(Message message);
 	String getHelp();
 	AccessLevels getAccessLevel();
 }

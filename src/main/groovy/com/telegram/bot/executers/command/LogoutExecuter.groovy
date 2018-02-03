@@ -1,25 +1,24 @@
 package com.telegram.bot.executers.command
 
 import java.util.HashMap
-
-import org.apache.camel.component.telegram.model.IncomingMessage
-import org.apache.camel.component.telegram.model.OutgoingTextMessage
+import org.telegram.telegrambots.api.methods.send.SendMessage
+import org.telegram.telegrambots.api.objects.Message
 import com.telegram.bot.cache.CacheManager
 import com.telegram.bot.entity.FriendUser
 import com.telegram.bot.executers.AccessLevels
 import com.telegram.bot.executers.IExecuters
 
 class LogoutExecuter implements IExecuters {
-	private IncomingMessage message	=	null;
-	private OutgoingTextMessage outMessage	=	new OutgoingTextMessage();
+	private Message message	=	null;
+	private SendMessage outMessage	=	new SendMessage();
 	
 	@Override
-	public void setMessage(IncomingMessage message) {
+	public void setMessage(Message message) {
 		this.message=message;
 	}
 	
 	@Override
-	public OutgoingTextMessage getAnswer() {
+	public SendMessage getAnswer() {
 		FriendUser friendUser	=	CacheManager.removeUserFromCache(message.getFrom().getId());
 		if(friendUser	!=	null) {
 			outMessage.setText("До свидания "+friendUser.getFname()+" "+friendUser.getName()+"!");

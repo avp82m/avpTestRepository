@@ -2,10 +2,10 @@ package com.telegram.bot.executers.command
 
 import java.util.HashMap
 
-import org.apache.camel.component.telegram.model.IncomingMessage
-import org.apache.camel.component.telegram.model.OutgoingTextMessage
-import org.springframework.beans.factory.annotation.Autowired
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.telegram.telegrambots.api.methods.send.SendMessage
+import org.telegram.telegrambots.api.objects.Message
 import com.telegram.bot.cache.CacheManager
 import com.telegram.bot.entity.FriendUser
 import com.telegram.bot.executers.AccessLevels
@@ -15,15 +15,14 @@ import com.telegram.bot.executers.listener.IAnswerListener
 import com.telegram.bot.frendserever.api.FrendServerAPI
 import com.telegram.bot.frendserever.api.requests.GetCurrentUser
 import com.telegram.bot.frendserever.api.requests.IFriendServerRequest
-import com.telegram.bot.service.MessageService
 
 class LoginExecuter implements IExecuters {
-	private IncomingMessage message	=	null;
-	private OutgoingTextMessage outMessage	=	new OutgoingTextMessage();
+	private Message message	=	null;
+	private SendMessage outMessage	=	new SendMessage();
 	private FriendUser friendUser	=	new FriendUser();
 	
 	@Override
-	public void setMessage(IncomingMessage message) {
+	public void setMessage(Message message) {
 		this.message=message;
 	}
 	
@@ -48,9 +47,9 @@ class LoginExecuter implements IExecuters {
 		private FriendUser friendUser	=	new FriendUser();
 		
 		@Override
-		OutgoingTextMessage action(IncomingMessage message) {
+		SendMessage action(Message message) {
 			
-			friendUser.setId(message.from.getId());
+			friendUser.setId(message.getFrom().getId());
 			friendUser.setEmail(message.getText().toLowerCase());
 			
 			if(checkEmail(friendUser.getEmail())) {
@@ -67,7 +66,7 @@ class LoginExecuter implements IExecuters {
 	
 	class PinListener implements IAnswerListener  {
 		@Override
-		OutgoingTextMessage action(IncomingMessage message) {
+		SendMessage action(Message message) {
 			friendUser	=	new FriendUser(message.getFrom().getId());
 			friendUser.setPin(message.getText());
 			if(checkPin(message.getText())) {
@@ -85,7 +84,7 @@ class LoginExecuter implements IExecuters {
 	}
 	
 	@Override
-	public OutgoingTextMessage getAnswer() {
+	public SendMessage getAnswer() {
 		friendUser	=	new FriendUser(message.getFrom().getId());
 		if(friendUser == null || !friendUser.getIsAutorized()) {
 			outMessage.setText("Пользователь не определен, введите email:");

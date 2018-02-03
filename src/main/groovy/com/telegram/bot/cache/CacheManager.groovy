@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
 
 public class CacheManager {
        private static final Logger log = LoggerFactory.getLogger(CacheManager.class);
-	   private static HashMap <Long,FriendUser> FriendUsersCache = new HashMap <Long,FriendUser>();
+	   private static HashMap <Integer,FriendUser> FriendUsersCache = new HashMap <Integer,FriendUser>();
 	   
 	   
-       public static FriendUser getUserFromCache(Long userId) {
+       public static FriendUser getUserFromCache(Integer userId) {
 		   log.debug("Ищем пользователя в кеше: {}",userId);
 		   if(FriendUsersCache.containsKey(userId)) {
 			   log.debug("Извлекаем пользователя из кеша: {}",userId);
@@ -30,18 +30,18 @@ public class CacheManager {
 	   }
 	   
 	   
-	   public static HashMap <Long,FriendUser> getUsers() {
+	   public static HashMap <Integer,FriendUser> getUsers() {
 		   return FriendUsersCache;
 	   }
 	   
 	   
-	   public static void setUserToCache(Long userId,FriendUser) {
+	   public static void setUserToCache(Integer userId,FriendUser) {
 		   log.debug("Добавляем пользователя в кеш: {}",userId);
 		   FriendUsersCache.put(userId,FriendUser);
 	   }
 	   
 	   
-	   public static FriendUser removeUserFromCache(Long userId) {
+	   public static FriendUser removeUserFromCache(Integer userId) {
 		   log.debug("Удаляем пользователя из кеша: {}",userId);
 		   return FriendUsersCache.remove(userId);
 	   }

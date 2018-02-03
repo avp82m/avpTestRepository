@@ -2,13 +2,12 @@ package com.telegram.bot.executers.command
 
 import java.util.HashMap
 
-import org.apache.camel.component.telegram.model.IncomingMessage
-import org.apache.camel.component.telegram.model.OutgoingTextMessage
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.telegram.telegrambots.api.methods.send.SendMessage
 import com.telegram.bot.cache.CacheManager
 import com.telegram.bot.entity.FriendUser
+import org.telegram.telegrambots.api.objects.Message;
 import com.telegram.bot.executers.AccessLevels
 import com.telegram.bot.executers.IExecuters
 import com.telegram.bot.frendserever.api.FrendServerAPI
@@ -17,17 +16,17 @@ import com.telegram.bot.frendserever.api.requests.GetCurrentUser
 
 class AboutMeExecuter implements IExecuters {
 	private static final Logger log = LoggerFactory.getLogger(AboutMeExecuter.class);
-	private IncomingMessage message	=	null;
-	private OutgoingTextMessage outMessage	=	new OutgoingTextMessage();
+	private Message message	=	null;
+	private SendMessage outMessage	=	new SendMessage();
 	
 	
 	@Override
-	public void setMessage(IncomingMessage message) {
+	public void setMessage(Message message) {
 		this.message=message;
 	}
 	
 	@Override
-	public OutgoingTextMessage getAnswer() {
+	public SendMessage getAnswer() {
 		String answer	=	"";
 		try {
 			FriendUser friendUser	=	new FriendUser(message.getFrom().getId());

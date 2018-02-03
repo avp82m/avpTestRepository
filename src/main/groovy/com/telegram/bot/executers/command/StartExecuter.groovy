@@ -1,27 +1,26 @@
 package com.telegram.bot.executers.command
 
 import java.util.HashMap
-
-import org.apache.camel.component.telegram.model.IncomingMessage
-import org.apache.camel.component.telegram.model.OutgoingTextMessage
+import org.telegram.telegrambots.api.methods.send.SendMessage
+import org.telegram.telegrambots.api.objects.Message
 import com.telegram.bot.entity.FriendUser
 import com.telegram.bot.executers.AccessLevels
 import com.telegram.bot.executers.IExecuters
 import com.telegram.bot.cache.CacheManager
 
 class StartExecuter implements IExecuters {
-	private IncomingMessage message	=	null;
-	private OutgoingTextMessage outMessage	=	new OutgoingTextMessage();
+	private Message message	=	null;
+	private SendMessage outMessage	=	new SendMessage();
 	private FriendUser friendUser	=	null;
 	
 	@Override
-	public void setMessage(IncomingMessage message) {
+	public void setMessage(Message message) {
 		this.message=message;
-		this.friendUser	=	new FriendUser(message.from.getId());
+		this.friendUser	=	new FriendUser(message.getFrom().getId());
 	}
 	
 	@Override
-	public OutgoingTextMessage getAnswer() {
+	public SendMessage getAnswer() {
 		if(friendUser == null || !friendUser.getIsAutorized())
 			outMessage.setText("Здравствуйте! Авторизуйтесь, что бы я знал как к Вам обращаться /login.");
 		else

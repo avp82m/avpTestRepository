@@ -1,10 +1,8 @@
 package com.telegram.bot.entity
-import lombok.Getter;
-import lombok.Setter;
 import com.telegram.bot.cache.CacheManager
 
 class FriendUser {
-	private Long id;
+	private Integer id;
 	private String fname;
 	private String name;
 	private String sname;
@@ -14,7 +12,7 @@ class FriendUser {
 	private String pin;
 	private userData	=	null;
 	
-	FriendUser(Long userId){
+	FriendUser(Integer userId){
 		FriendUser	tmp	=	CacheManager.getUserFromCache(userId);
 		if(tmp!=null) {
 			setId(tmp.getId());
@@ -45,11 +43,11 @@ class FriendUser {
 		return userData;
 	}
 			
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

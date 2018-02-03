@@ -2,9 +2,8 @@ package com.telegram.bot.frendserever.api
 
 import com.telegram.bot.entity.FriendUser
 import com.telegram.bot.frendserever.api.requests.IFriendServerRequest
-import com.telegram.bot.service.MessageService
 
-import org.apache.camel.component.telegram.model.IncomingMessage
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired
