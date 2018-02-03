@@ -33,7 +33,7 @@ class AboutMeExecuter implements IExecuters {
 			FriendUser friendUser	=	new FriendUser(message.getFrom().getId());
 			
 			if (friendUser.getIsAutorized()	==	false) {
-				outMessage.setText("Для получения информации необходимо авторизоваться.");
+				outMessage.setText("Для получения информации необходимо авторизоваться /login");
 				return outMessage;
 			}
 			
