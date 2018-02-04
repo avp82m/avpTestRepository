@@ -2,17 +2,17 @@ package friend.bot.entity
 import friend.bot.cache.CacheManager
 
 class FriendUser {
-	private Integer id;
-	private String fname;
-	private String name;
-	private String sname;
-	private String email;
+	private Long id;
+	private String fname	=	"";
+	private String name	=	"";
+	private String sname	=	"";
+	private String email	=	"";
 	private Boolean isAutorized	=	false;
-	private String sessionId;
-	private String pin;
+	private String sessionId	=	"";
+	private String pin	=	"";
 	private userData	=	null;
 	
-	FriendUser(Integer userId){
+	FriendUser(Long userId){
 		FriendUser	tmp	=	CacheManager.getUserFromCache(userId);
 		if(tmp!=null) {
 			setId(tmp.getId());
@@ -43,11 +43,11 @@ class FriendUser {
 		return userData;
 	}
 			
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

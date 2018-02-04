@@ -9,7 +9,7 @@ public class Message {
 
 	@Id
 	@GeneratedValue
-	Integer id
+	Long id
 	
     String text
 
