@@ -5,6 +5,10 @@ import java.io.IOException
 import javax.annotation.PostConstruct
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.PropertySource
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service
@@ -50,7 +54,6 @@ class BotInitializer extends TelegramLongPollingBot{
 		ApiContextInitializer.init();
 	}
 	
-	
 	@PostConstruct
 	public void registerBot(){
 		log.info("Регистрация бота")
@@ -67,6 +70,7 @@ class BotInitializer extends TelegramLongPollingBot{
 	public void onUpdateReceived(Update update) {
 		
 		if (update.hasMessage()) {
+		
 			log.debug("Получено сообщение: {}",update.getMessage().getText())
 			Message message = update.getMessage();
 			SendMessage response = getAnswer(message);
@@ -153,7 +157,7 @@ class BotInitializer extends TelegramLongPollingBot{
 			log.error("getAnswer: {}",e);
 		}
 		
-		return new DefaultExecuter().getErrorAnswer(message,"Не понимаю о чем Вы. Для вывода справки введите /help");
+		return new DefaultExecuter().getErrorAnswer(message,message.getText());
 	}
 
 	

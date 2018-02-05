@@ -3,21 +3,22 @@ package friend.bot.frendserever.api
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired
-
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.env.Environment
+import org.springframework.stereotype.Component
 import friend.bot.entity.FriendUser
 import friend.bot.executers.command.LogoutExecuter
 import friend.bot.frendserever.api.requests.IFriendServerRequest
 
-
+@Component
 class FrendServerAPI {
 	private static final Logger log = LoggerFactory.getLogger(FrendServerAPI.class);
-	
-	
-	
+	private static final String urlApi	=	"https://friend-st.sbrf.ru:9443/FriendServerDev"
 	public static Boolean authenticate(FriendUser friendUser){
+		
 		try {
 			String postResult;
-			HttpURLConnection conn	=	(HttpURLConnection)new URL("http://sbt-oapou-034.sigma.sbrf.ru:9080/FriendServerDev/rest/state/json/auth.rpc/authenticate").openConnection();
+			HttpURLConnection conn	=	(HttpURLConnection)new URL(urlApi+"rest/state/json/auth.rpc/authenticate").openConnection();
 			conn.requestMethod = "POST";
 			conn.doOutput = true;
 			conn.setRequestProperty("Content-Type", "application/json");
@@ -50,7 +51,7 @@ class FrendServerAPI {
 	public static def sendRequest(IFriendServerRequest request, FriendUser friendUser) {
 		try {
 			String postResult;
-			HttpURLConnection conn	=	(HttpURLConnection)new URL("http://sbt-oapou-034.sigma.sbrf.ru:9080/FriendServerDev"+request.getUrl()).openConnection();
+			HttpURLConnection conn	=	(HttpURLConnection)new URL(urlApi+request.getUrl()).openConnection();
 			conn.requestMethod = request.getRequestMethod();
 			conn.doOutput = true;
 			conn.setRequestProperty("Content-Type", request.getContentType());
@@ -63,7 +64,9 @@ class FrendServerAPI {
 			log.debug("response: {}",jsonResp);
 			
 			if(conn.responseCode==200) {
-				return jsonResp.get("object");
+				return jsonResp.object;
+			}else if (conn.responseCode==401) {
+				LogoutExecuter.logout(friendUser.getId()) ;
 			}
 		}catch(Exception e) {
 			log.debug("Исключение при обращении к серверной части: {}\n{}",request.toString(),e.getLocalizedMessage());
