@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired
 
 import friend.bot.entity.FriendUser
+import friend.bot.executers.command.LogoutExecuter
 import friend.bot.frendserever.api.requests.IFriendServerRequest
 
 
@@ -33,12 +34,13 @@ class FrendServerAPI {
 				friendUser.setSessionId(conn.getHeaderField("Set-Cookie"));
 				friendUser.save();
 				log.debug("FrendServer Cookie: {}",friendUser.getSessionId());
-			
 				return true;
+			}else if (conn.responseCode==401) {
+				LogoutExecuter.logout(friendUser.getId()) ;
 			}
 			return false;
 		}catch(Exception e) {
-			log.debug("PIN не подтвержден: {}",e.getLocalizedMessage());
+			log.error("PIN не подтвержден: {}",e.getLocalizedMessage());
 			return false;
 		}
 	}
